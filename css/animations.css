@@ -1,0 +1,193 @@
+/* ================================================================
+   css/animations.css — Keyframes & Motion
+================================================================ */
+
+/* ── PREFERS REDUCED MOTION ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── KEYFRAMES ───────────────────────────────────────────────── */
+
+/* Nebula slow drift */
+@keyframes nebulaDrift {
+  0%   { transform: scale(1) rotate(0deg); }
+  50%  { transform: scale(1.05) rotate(1deg); }
+  100% { transform: scale(1) rotate(-1deg); }
+}
+
+/* Orb / planet pulse */
+@keyframes orbPulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50%       { opacity: 1;    transform: scale(1.03); }
+}
+
+/* Ring rotation (home page) */
+@keyframes ringRotate {
+  from { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(0deg); }
+  to   { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(360deg); }
+}
+
+/* Generic float up-down */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* Envelope floating */
+@keyframes envFloat {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50%       { transform: translateY(-12px) rotate(1deg); }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide up */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Bounce (birthday badge) */
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-12px); }
+}
+
+/* Candle flicker */
+@keyframes flameFlicker {
+  0%   { transform: translateX(-50%) scaleX(1)   scaleY(1); opacity: 1; }
+  30%  { transform: translateX(-50%) scaleX(0.85) scaleY(1.1); opacity: 0.9; }
+  60%  { transform: translateX(-50%) scaleX(1.1)  scaleY(0.9); opacity: 0.95; }
+  100% { transform: translateX(-50%) scaleX(0.9)  scaleY(1.05); opacity: 1; }
+}
+
+/* Candle blow-out */
+@keyframes blowOut {
+  from { opacity: 1; transform: translateX(-50%) scale(1); }
+  to   { opacity: 0; transform: translateX(-50%) scale(0.2) translateY(-10px); }
+}
+
+/* Confetti fall */
+@keyframes confettiFall {
+  0%   { top: -10px; opacity: 1; transform: rotate(0deg) translateX(0); }
+  100% { top: 110vh; opacity: 0; transform: rotate(var(--rot,360deg)) translateX(var(--dx,0px)); }
+}
+
+/* Spinning star */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Music note bounce */
+@keyframes musicBounce {
+  from { transform: translateY(0)   scale(1); }
+  to   { transform: translateY(-3px) scale(1.1); }
+}
+
+/* Shooting star */
+@keyframes shootingStar {
+  0%   { opacity: 0; transform: translate(0,0) scaleX(1); }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--sx,300px), var(--sy,150px)) scaleX(0.2); }
+}
+
+/* Star twinkle */
+@keyframes twinkle {
+  0%, 100% { opacity: var(--alpha, 0.6); }
+  50%       { opacity: calc(var(--alpha, 0.6) * 0.3); }
+}
+
+/* Section transition */
+.section { transition: opacity 0.5s ease, transform 0.5s ease; }
+
+/* Card enter */
+.dest-card {
+  animation: fadeIn 0.4s ease both;
+}
+.dest-card:nth-child(2) { animation-delay: 0.08s; }
+.dest-card:nth-child(3) { animation-delay: 0.16s; }
+.dest-card:nth-child(4) { animation-delay: 0.24s; }
+.dest-card:nth-child(5) { animation-delay: 0.32s; }
+
+/* Intro overlay fade out */
+.intro-fadeout {
+  animation: introOut 0.8s ease forwards;
+}
+@keyframes introOut {
+  to { opacity: 0; pointer-events: none; }
+}
+
+/* Particle burst (JS-created elements) */
+.particle {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  animation: particleBurst var(--dur, 1s) ease-out forwards;
+  z-index: 200;
+}
+@keyframes particleBurst {
+  0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--tx,0px), var(--ty,-80px)) scale(0); }
+}
+
+/* Keep-letter heart burst */
+.heart-burst {
+  position: fixed;
+  font-size: 1.5rem;
+  pointer-events: none;
+  animation: heartFly 1.2s ease-out forwards;
+  z-index: 200;
+}
+@keyframes heartFly {
+  0%   { opacity: 1; transform: translate(0, 0) scale(0.5); }
+  60%  { opacity: 1; transform: translate(var(--tx,0px), -80px) scale(1.2); }
+  100% { opacity: 0; transform: translate(var(--tx2,0px), -160px) scale(0.8); }
+}
+
+/* Pulsing heart */
+@keyframes pulseHeart {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7)); }
+  50%      { transform: scale(1.15); filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.95)); }
+}
+
+/* Pulse glow for stars */
+@keyframes pulseGlow {
+  0%   { transform: scale(0.95); box-shadow: 0 0 15px 3px rgba(255, 255, 255, 0.7); }
+  100% { transform: scale(1.1);  box-shadow: 0 0 35px 8px rgba(255, 255, 255, 1); }
+}
+
+/* Pop in for modal */
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Floating background hearts */
+@keyframes floatHeartUp {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.7);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateY(-105vh) rotate(25deg) scale(1.1);
+    opacity: 0;
+  }
+}
+

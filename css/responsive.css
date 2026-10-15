@@ -1,0 +1,170 @@
+/* ================================================================
+   css/responsive.css — Mobile-first responsive layout
+================================================================ */
+
+/* ── MOBILE BASE (≤ 480px) ───────────────────────────────────── */
+@media (max-width: 480px) {
+  :root { --radius: 12px; --radius-lg: 16px; }
+
+  .site-nav { padding: 0.75rem 1rem; }
+  .nav-links { display: none; flex-direction: column; position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: rgba(7,11,26,0.97);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    backdrop-filter: blur(16px);
+    gap: 0.5rem;
+  }
+  .nav-links.open { display: flex; }
+  .nav-menu-toggle { display: flex; align-items: center; }
+  .nav-link { padding: 0.6rem 0.5rem; font-size: 0.9rem; }
+
+  .back-btn { top: 1rem; left: 0.75rem; font-size: 0.75rem; padding: 0.4rem 0.75rem; }
+
+  .section { padding: 4.5rem 1rem 1.5rem; }
+  .section--home { padding-top: 4rem; }
+
+  .home-ring { display: none; }
+  .home-title { font-size: 1.9rem; }
+  .home-name { font-size: 1.4rem; }
+
+  .destinations { gap: 0.75rem; }
+  .dest-card { flex: 1 1 130px; max-width: 150px; padding: 1.25rem 1rem; }
+  .dest-icon { font-size: 1.5rem; }
+  .dest-label { font-size: 0.72rem; }
+
+  .countdown-display { gap: 0.3rem; }
+  .cd-unit { min-width: 72px; padding: 1rem 0.75rem; }
+  .cd-val { font-size: 2rem; }
+  .cd-sep { font-size: 1.5rem; }
+
+  .hub-cards { grid-template-columns: 1fr; gap: 0.65rem; }
+  .hub-card { padding: 0.85rem 1rem; }
+
+  .jp-hero-portrait-card {
+    max-width: 310px;
+    padding: 1.35rem 1rem;
+    margin-bottom: 2rem;
+  }
+  .jp-portrait-frame {
+    width: 180px;
+    height: 230px;
+    margin-bottom: 1rem;
+  }
+  .jp-portrait-name {
+    font-size: 1.65rem;
+  }
+  .jp-portrait-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+  }
+
+  .nicknames-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .nickname-card { padding: 1.25rem 0.75rem; }
+  .nickname-card--prominent { grid-column: 1 / -1; padding: 1.5rem 1.25rem; }
+  .handwritten-card { padding: 2rem 1.2rem 1.5rem; }
+  .handwritten-text { font-size: 1.3rem; }
+
+  .love-sky { max-width: 320px; }
+  .love-letter-card { padding: 1.8rem 1.25rem; }
+  .love-message-content { font-size: 1.05rem; }
+
+  .surprise-card--main { padding: 2rem 1.25rem; }
+  .gift-msg-inner { padding: 1.5rem 1rem; }
+
+  .tribute-block { gap: 0.4rem 0.6rem; }
+  .tribute-item { font-size: 0.75rem; padding: 0.3rem 0.65rem; }
+
+  .hug-card { padding: 2rem 1.25rem; }
+  .hug-emoji { font-size: 3rem; }
+
+  .gallery-grid { columns: 1 180px; }
+
+  .lb-prev { left: 0.5rem; }
+  .lb-next { right: 0.5rem; }
+  .lb-polaroid { padding: 0.75rem 0.75rem 2.5rem; }
+
+  .envelope-scene { padding: 3.5rem 0.5rem 2rem; }
+  .envelope { width: min(320px, 88vw); height: 195px; }
+  .env-seal { width: 48px; height: 48px; font-size: 1.2rem; }
+  .env-preview-title { font-size: 0.78rem; }
+  .letter-paper { padding: 2rem 1.25rem; }
+  .letter-body { font-size: 0.95rem; }
+  .letter-actions-secondary {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  .btn-letter-secondary,
+  .btn-letter-next {
+    width: 100%;
+    max-width: 290px;
+    justify-content: center;
+  }
+
+  /* Celestial Orbit on Mobile */
+  .celestial-orbit-system { height: 165px; margin: 1rem auto 2.2rem; }
+  .orbit-track-ring { width: 240px; height: 86px; }
+  .earth-sphere { width: 54px; height: 54px; }
+  .moon-sphere { width: 26px; height: 26px; }
+  .celestial-name { font-size: 0.92rem; }
+  .celestial-badge { font-size: 0.62rem; padding: 0.1rem 0.45rem; }
+  .celestial-moon { animation-name: moonOrbitMobile; }
+
+  /* Birthday Sky Celebration on Mobile */
+  .sky-orbit-system { width: 290px; height: 290px; }
+  .sky-orbit-word { font-size: 0.72rem; padding: 0.45rem 0.85rem; --dist: 125px !important; }
+  .sky-wish-orb { width: 110px; height: 110px; }
+  .sky-orb-sphere { width: 80px; height: 80px; }
+  .sky-reveal-name { font-size: 2.3rem; }
+  .sky-controls-bar { top: 0.75rem; left: 0.75rem; right: 0.75rem; }
+  .sky-ctrl-btn { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+
+  .music-ctrl { bottom: 1rem; right: 1rem; }
+  .vol-slider { width: 50px; }
+}
+
+/* ── SMALL TABLET (481px – 768px) ───────────────────────────── */
+@media (min-width: 481px) and (max-width: 768px) {
+  .nav-links { display: none; flex-direction: column; position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: rgba(7,11,26,0.97);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    backdrop-filter: blur(16px);
+  }
+  .nav-links.open { display: flex; }
+  .nav-menu-toggle { display: flex; align-items: center; }
+
+  .gallery-grid { columns: 2 200px; }
+  .destinations { gap: 1rem; }
+  .dest-card { flex: 1 1 150px; max-width: 180px; }
+
+  .surprises-grid { flex-direction: column; align-items: center; }
+  .surprise-card { width: 90%; max-width: 420px; }
+}
+
+/* ── TABLET (769px – 1024px) ──────────────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .nav-links { display: flex; }
+  .nav-menu-toggle { display: none; }
+  .gallery-grid { columns: 3 200px; }
+  .dest-card { flex: 1 1 140px; max-width: 170px; }
+}
+
+/* ── DESKTOP (1025px +) ──────────────────────────────────── */
+@media (min-width: 1025px) {
+  .nav-links { display: flex; }
+  .nav-menu-toggle { display: none; }
+  .gallery-grid { columns: 4 200px; }
+}
+
+/* ── SAFE AREA (iOS notch) ───────────────────────────────── */
+@supports (padding: env(safe-area-inset-top)) {
+  .site-nav {
+    padding-top: calc(1rem + env(safe-area-inset-top));
+    padding-left: calc(2rem + env(safe-area-inset-left));
+    padding-right: calc(2rem + env(safe-area-inset-right));
+  }
+  .section { padding-bottom: calc(2rem + env(safe-area-inset-bottom)); }
+}

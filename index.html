@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="A Little Universe for Jayaprakash — My Fvrt One 🤍" />
+  <title>A Little Universe 🤍 | For My Fvrt One</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css?v=bday_sky_v1" />
+  <link rel="stylesheet" href="css/animations.css?v=bday_sky_v1" />
+  <link rel="stylesheet" href="css/responsive.css?v=bday_sky_v1" />
+</head>
+<body>
+
+<!-- ============================================================
+     STAR CANVAS (background cosmic layer)
+============================================================ -->
+<canvas id="starCanvas"></canvas>
+
+<!-- ============================================================
+     FLOATING HEARTS LAYER
+============================================================ -->
+<div id="floatingHeartsContainer" class="floating-hearts-layer" aria-hidden="true"></div>
+
+<!-- ============================================================
+     SECTION 1 — CINEMATIC INTRODUCTION OVERLAY
+============================================================ -->
+<div id="introOverlay" class="hidden">
+  <div class="nebula-bg"></div>
+  <div class="intro-orb"></div>
+
+  <div class="intro-content">
+    <p class="intro-line" id="introLine1"></p>
+    <h1 class="intro-fvrt" id="introFvrt"></h1>
+    <p class="intro-line intro-sub" id="introLine2"></p>
+    
+    <button class="btn-glow" id="enterBtn" aria-label="Enter your universe">
+      <span class="btn-inner">ENTER YOUR UNIVERSE 🤍</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============================================================
+     MUSIC CONTROLLER
+============================================================ -->
+<div id="musicCtrl" class="music-ctrl hidden" role="group" aria-label="Music controls">
+  <button id="musicToggle" class="music-btn" aria-label="Toggle music">
+    <span class="music-icon" id="musicIcon">♪</span>
+  </button>
+  <input type="range" id="volSlider" class="vol-slider" min="0" max="1" step="0.05" value="0.5" aria-label="Volume" />
+</div>
+
+<!-- ============================================================
+     MAIN APP
+============================================================ -->
+<div id="mainApp">
+
+  <!-- ── NAVIGATION BAR (VISIBLE INSIDE UNIVERSE) ─────────── -->
+  <nav id="siteNav" class="site-nav" aria-label="Main navigation">
+    <button class="nav-home" id="navHome" aria-label="JP's Universe">✦ JP's Universe 🤍</button>
+    <div class="nav-links" id="navLinks">
+      <button class="nav-link active" data-target="nicknames">Nicknames 🤍</button>
+      <button class="nav-link" data-target="letter">Letter</button>
+      <button class="nav-link" data-target="loveStory">Love Wish 🤍</button>
+      <button class="nav-link" data-target="surprises">Surprise 🎁</button>
+      <button class="nav-link" data-target="final">Celebration 🎂</button>
+      <button class="nav-link" data-target="gallery">Memories 📷</button>
+    </div>
+    <button class="nav-menu-toggle" id="navMenuToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  </nav>
+
+  <!-- ── BIRTHDAY COUNTDOWN (ENTRANCE LOCK PAGE) ───────── -->
+  <section id="countdown" class="section section--countdown active-section">
+    <div class="section-nebula"></div>
+    <div class="section-header">
+      <p class="section-eyebrow" id="cdEyebrow">✦ TIME IS PRECIOUS ✦</p>
+      <h2 class="section-title" id="cdTitle">Birthday Countdown</h2>
+      <p class="section-sub" id="cdSubtext">Counting down to 18/10/2026 Sunday for JP 🤍</p>
+    </div>
+
+    <div class="countdown-display" id="countdownDisplay">
+      <div class="cd-unit">
+        <div class="cd-val" id="cdDays">00</div>
+        <div class="cd-lbl">Days</div>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit">
+        <div class="cd-val" id="cdHours">00</div>
+        <div class="cd-lbl">Hours</div>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit">
+        <div class="cd-val" id="cdMins">00</div>
+        <div class="cd-lbl">Minutes</div>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit">
+        <div class="cd-val" id="cdSecs">00</div>
+        <div class="cd-lbl">Seconds</div>
+      </div>
+    </div>
+
+    <div class="birthday-msg hidden" id="birthdayMsg">
+      <div class="bday-badge">🎂</div>
+      <h3 class="bday-title">IT'S YOUR DAY, MY FVRT ONE! 🤍❤️</h3>
+      <p class="bday-sub">The stars aligned just for you today, Jayaprakash.</p>
+    </div>
+
+    <div class="post-bday hidden" id="postBdayMsg">
+      <p class="post-msg">The celebration never ends for someone as special as you. 🤍</p>
+    </div>
+
+    <!-- Locked Card: Shown until 18/10/2026 Sunday 12:00 AM -->
+    <div class="countdown-lock-card" id="countdownLockCard">
+      <div class="lock-icon-wrap">
+        <span class="lock-icon">🔒</span>
+        <span class="lock-glow-ring"></span>
+      </div>
+      <h3 class="lock-title">Universe Locked Until 18/10/2026 Sunday 12:00 AM</h3>
+      <p class="lock-desc">The gates to Jayaprakash's cosmic universe unlock when the clock strikes midnight on his special day 🤍</p>
+      
+      <!-- Creator skip button: ONLY visible on desktop, hidden on mobile -->
+      <button class="creator-skip-btn" id="creatorSkipBtn" aria-label="Creator Access">
+        <span class="creator-skip-sparkle">✦</span>
+        <span class="creator-skip-text">Creator Access — Unlock Universe</span>
+        <span class="creator-skip-arrow">➔</span>
+      </button>
+    </div>
+
+    <!-- Birthday Arrival Unlocked CTA: Shown after 18/10/2026 12:00 AM -->
+    <div class="countdown-hero-cta hidden" id="countdownHeroCta">
+      <button class="btn-glow btn-glow--lg" id="countdownEnterBtn" aria-label="Enter your universe">
+        <span class="btn-inner">ENTER YOUR UNIVERSE 🤍</span>
+      </button>
+      <p class="cta-hint">Tap to step into the universe created for My Fvrt One 🤍</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: THE PERSON BEHIND THE NICKNAMES ────────── -->
+  <section id="nicknames" class="section section--nicknames">
+    <div class="section-nebula"></div>
+
+    <div class="section-header">
+      <p class="section-eyebrow">✦ JAYAPRAKASH ✦</p>
+      <h2 class="section-title">One person. So many names. One special place. 🤍</h2>
+      <p class="section-sub">Every name holds a million warm moments and brotherly love.</p>
+    </div>
+
+    <!-- Featured Portrait of Jayaprakash -->
+    <div class="jp-hero-portrait-card">
+      <div class="jp-portrait-badge">✦ MY FAVOURITE PERSON ✦</div>
+      <div class="jp-portrait-frame">
+        <img src="photos/image%20copy.png" alt="Jayaprakash - Our Fvrt One 🤍" class="jp-portrait-img" />
+        <div class="jp-portrait-glow-ring"></div>
+        <div class="jp-portrait-heart">🤍</div>
+      </div>
+      <div class="jp-portrait-info">
+        <h3 class="jp-portrait-name">Jayaprakash</h3>
+        <p class="jp-portrait-tag">MY FVRT ONE · EN THAMBI · POTTA 🤍</p>
+      </div>
+    </div>
+
+    <!-- Handwritten Message -->
+    <div class="handwritten-wrapper">
+      <div class="handwritten-card">
+        <div class="handwritten-quote">“</div>
+        <p class="handwritten-text">
+          To the world, you're Jayaprakash.<br/>
+          To me, you're JP, my Potta, my Thangameyyy,<br/>
+          En Thambi, my Uyiree...<br/>
+          and forever, my Fvrt One. 🤍<br/><br/>
+          No matter how many names I call you,<br/>
+          the love behind every name stays the same.
+        </p>
+        <div class="handwritten-footer">
+          <span class="heart-symbol">🤍</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-actions">
+      <button class="btn-glow" data-target="letter">
+        <span class="btn-inner">Read Your Letter ✉ 🤍</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ── SECTION 4: A LETTER FOR JP ────────────────────────── -->
+  <section id="letter" class="section section--letter">
+    <div class="section-nebula"></div>
+    <button class="back-btn" data-target="nicknames">← Back to Nicknames 🤍</button>
+    
+    <div class="section-header">
+      <p class="section-eyebrow">✦ WORDS FROM THE HEART ✦</p>
+      <h2 class="section-title">To my Thangameyyy, En Thambi 🤍</h2>
+      <p class="section-sub">A letter written with all the love and care in the world.</p>
+    </div>
+
+    <div class="envelope-scene" id="envelopeScene">
+      <div class="envelope" id="envelope" tabindex="0" role="button" aria-label="Open letter">
+        <!-- Inside back wall -->
+        <div class="env-back"></div>
+
+        <!-- Letter paper tucked inside that slides out on touch -->
+        <div class="env-paper-preview" id="envPaperPreview">
+          <div class="env-preview-heart">🤍</div>
+          <p class="env-preview-title">To my Thangameyyy, En Thambi 🤍</p>
+          <div class="env-preview-lines">
+            <span class="env-preview-line env-preview-line--1"></span>
+            <span class="env-preview-line env-preview-line--2"></span>
+            <span class="env-preview-line env-preview-line--3"></span>
+          </div>
+        </div>
+
+        <!-- Front pocket folds -->
+        <div class="env-pocket">
+          <div class="env-pocket-left"></div>
+          <div class="env-pocket-right"></div>
+          <div class="env-pocket-bottom"></div>
+        </div>
+
+        <!-- Top folding flap -->
+        <div class="env-flap"></div>
+
+        <!-- Golden wax seal with glowing white heart -->
+        <div class="env-seal" id="envSeal">
+          <span class="env-seal-heart">🤍</span>
+        </div>
+
+        <p class="env-hint">Tap to open your letter 🤍</p>
+      </div>
+    </div>
+
+    <div class="letter-view hidden" id="letterView" aria-hidden="true">
+      <div class="letter-paper">
+        <div class="letter-glowing-heart">🤍</div>
+        <h3 class="letter-heading">To my Thangameyyy, En Thambi 🤍</h3>
+        <div class="letter-body" id="letterBody"></div>
+        <div class="letter-sig" id="letterSig">With all my love,<br/>From someone who is always cheering for you. 🤍</div>
+        
+        <div class="letter-actions">
+          <button class="btn-glow btn-letter-keep" id="keepLetterBtn">
+            <span class="btn-inner">KEEP THIS LITTLE LETTER 💌 🤍</span>
+          </button>
+          <div class="letter-actions-secondary">
+            <button class="btn-letter-secondary" id="refoldLetterBtn" aria-label="Fold letter back into envelope">
+              <span class="btn-letter-icon">✉️</span> Fold Letter Back
+            </button>
+            <button class="btn-letter-next" data-target="loveStory" aria-label="Proceed to love story wish">
+              <span>Next: A Wish for Your Heart</span> <span class="btn-letter-arrow">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 5: A LITTLE WISH FOR YOUR LOVE STORY ──────── -->
+  <section id="loveStory" class="section section--lovestory">
+    <div class="section-nebula"></div>
+    <button class="back-btn" data-target="letter">← Back to Letter 💌</button>
+
+    <div class="section-header">
+      <p class="section-eyebrow">✦ GENTLE WISH ✦</p>
+      <h2 class="section-title">One little wish from my heart... 🤍</h2>
+      <p class="section-sub">Under the quiet night sky, where prayers are whispered.</p>
+    </div>
+
+    <!-- Celestial orbit system: Moon (JP) rotating Earth (Jeevitha) -->
+    <div class="celestial-orbit-system" id="celestialSystem" role="region" aria-label="Moon JP rotating Earth Jeevitha">
+      <div class="orbit-glow-nebula"></div>
+      
+      <!-- Elliptical orbit pathway ring -->
+      <div class="orbit-track-ring">
+        <div class="orbit-sparkle orbit-sparkle--1">✦</div>
+        <div class="orbit-sparkle orbit-sparkle--2">✦</div>
+      </div>
+
+      <!-- Center Body: Earth (Jeevitha) -->
+      <div class="celestial-body celestial-earth" id="celestialEarth" title="Jeevitha · Earth" tabindex="0" role="button" aria-label="Jeevitha, Earth">
+        <div class="earth-sphere">
+          <svg class="earth-map" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <clipPath id="earthClip">
+                <circle cx="50" cy="50" r="48"/>
+              </clipPath>
+              <radialGradient id="earthShine" cx="30%" cy="25%" r="70%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
+                <stop offset="45%" stop-color="rgba(255,255,255,0.05)"/>
+                <stop offset="100%" stop-color="rgba(4,10,25,0.75)"/>
+              </radialGradient>
+            </defs>
+            <g clip-path="url(#earthClip)">
+              <rect width="100" height="100" fill="#1e4fb8"/>
+              <!-- Continents (Emerald & turquoise) -->
+              <path d="M 18,34 Q 30,18 46,26 Q 60,34 54,48 Q 38,62 24,54 Z" fill="#10b981" opacity="0.95"/>
+              <path d="M 52,18 Q 72,12 84,28 Q 88,44 76,52 Q 66,42 58,32 Z" fill="#059669" opacity="0.95"/>
+              <path d="M 32,58 Q 48,52 58,68 Q 52,86 36,80 Q 26,72 32,58 Z" fill="#34d399" opacity="0.9"/>
+              <path d="M 10,64 Q 20,56 24,70 Q 16,82 8,76 Z" fill="#10b981" opacity="0.85"/>
+              <!-- Atmospheric Clouds -->
+              <path d="M 14,24 Q 34,30 54,20 Q 74,26 88,18 Q 74,32 48,28 Q 28,34 14,24 Z" fill="#ffffff" opacity="0.5"/>
+              <path d="M 22,66 Q 42,58 68,64 Q 82,60 72,72 Q 48,66 22,66 Z" fill="#ffffff" opacity="0.45"/>
+              <rect width="100" height="100" fill="url(#earthShine)"/>
+            </g>
+          </svg>
+          <div class="earth-atmosphere-glow"></div>
+        </div>
+        <div class="celestial-caption">
+          <span class="celestial-name">✦ Jeevitha</span>
+          <span class="celestial-badge">🌍 Earth</span>
+        </div>
+      </div>
+
+      <!-- Orbiting Body: Moon (JP) rotating Earth -->
+      <div class="celestial-body celestial-moon" id="celestialMoon" title="JP · Moon" tabindex="0" role="button" aria-label="JP, Moon orbiting Earth">
+        <div class="moon-sphere">
+          <div class="moon-spot moon-spot--1"></div>
+          <div class="moon-spot moon-spot--2"></div>
+          <div class="moon-spot moon-spot--3"></div>
+          <div class="moon-glow-aura"></div>
+        </div>
+        <div class="celestial-caption">
+          <span class="celestial-name">JP ✦</span>
+          <span class="celestial-badge">🌙 Moon</span>
+        </div>
+      </div>
+
+      <!-- Floating connection heart -->
+      <div class="orbit-center-heart" id="orbitCenterHeart">🤍</div>
+    </div>
+
+    <div class="love-letter-card">
+      <div class="love-message-content">
+        <p class="love-p highlight-p">JP, I know there's someone special in your heart. ❤️</p>
+        <p class="love-name">Jeevitha.</p>
+        <p class="love-p">I don't know what the future has written for you both, but I genuinely hope life gives your heart a beautiful chance.</p>
+        <p class="love-p">If your love is meant to find its way to her, I hope it happens with honesty, courage, understanding, and happiness.</p>
+        <p class="love-p">I hope one day you get to smile because the feelings you've carried quietly are understood.</p>
+        <p class="love-p">And if the journey takes time, please don't lose yourself while waiting for an answer.</p>
+        <p class="love-p highlight-p">Your feelings are precious, JP. Your happiness matters too.</p>
+        <p class="love-p">From my heart, I'm wishing that your love story gets the beautiful ending you've been hoping for.</p>
+        <p class="love-p love-sign">May your love find its way. ❤️🤍</p>
+      </div>
+
+      <div class="wish-reveal-area">
+        <button class="btn-glow" id="wishHeartBtn">
+          <span class="btn-inner">A wish for your heart 🤍</span>
+        </button>
+        <div class="wish-secret-reveal hidden" id="wishSecretReveal">
+          <div class="reveal-inner">
+            <p class="reveal-quote">“May the heart that loves sincerely<br/>one day find a heart that chooses it too. 🤍❤️”</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-actions">
+      <button class="btn-ghost" data-target="surprises">There's one more thing... → 🎁</button>
+    </div>
+  </section>
+
+  <!-- ── SECTION 6: THE SECRET MESSAGE ─────────────────────── -->
+  <section id="surprises" class="section section--surprises">
+    <div class="section-nebula"></div>
+    <button class="back-btn" data-target="loveStory">← Back to Love Wish 🤍</button>
+
+    <div class="section-header">
+      <p class="section-eyebrow">✦ SURPRISE ✦</p>
+      <h2 class="section-title">There's one more thing, my Fvrt One...</h2>
+      <p class="section-sub">A floating box in the galaxy, kept safe for your birthday.</p>
+    </div>
+
+    <div class="secret-box-container">
+      <div class="surprise-card surprise-card--main" id="giftCard">
+        <div class="surp-icon gift-box" id="giftBox" role="button" tabindex="0" aria-label="Open gift box">
+          <div class="gift-lid" id="giftLid"></div>
+          <div class="gift-base">
+            <div class="gift-ribbon"></div>
+          </div>
+        </div>
+
+        <button class="btn-glow" id="openSurpriseBtn">
+          <span class="btn-inner">OPEN YOUR LITTLE SURPRISE 🤍</span>
+        </button>
+
+        <!-- Revealed message -->
+        <div class="gift-message hidden" id="giftMsg">
+          <div class="gift-msg-inner">
+            <div class="gift-glowing-seal">🤍✨</div>
+            <p class="gift-msg-line">Whatever happens in your life, JP,<br/>I hope happiness finds you.</p>
+            <p class="gift-msg-line">I hope your dreams come true.<br/>I hope your heart finds peace.<br/>I hope your efforts become achievements.</p>
+            <p class="gift-msg-line">And when life gives you a thousand reasons to smile,<br/>I hope you never forget how much you deserve them.</p>
+            <div class="gift-msg-tribute">
+              Happy Birthday, Potta.<br/>
+              You're En Thambi.<br/>
+              You're my Uyiree.<br/>
+              <strong>You're my Fvrt One. 🤍❤️</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-actions" style="margin-top: 2rem;">
+      <button class="btn-glow" data-target="final">
+        <span class="btn-inner">Join the Celebration 🎂 🤍</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ── SECTION 7: FINAL CELEBRATION (THE BIRTHDAY SKY — FOR JP 🤍) ── -->
+  <section id="final" class="section section--final section--birthday-sky">
+    <!-- Dedicated high-performance particle & fireworks canvas -->
+    <canvas id="skyCelebrationCanvas" class="sky-celebration-canvas"></canvas>
+    
+    <!-- Ambient Nebula Backing -->
+    <div class="sky-ambient-glow"></div>
+
+    <!-- Celebration Top Bar Controls -->
+    <div class="sky-controls-bar">
+      <button class="sky-ctrl-btn" id="skyExitBtn" data-target="nicknames" aria-label="Exit Celebration">
+        ← Exit Celebration
+      </button>
+      <button class="sky-ctrl-btn" id="skyReplayBtn" aria-label="Replay Celebration">
+        Replay Celebration ✦
+      </button>
+    </div>
+
+    <!-- SCENE CONTAINER -->
+    <div class="sky-stages-wrap" id="skyStagesWrap">
+
+      <!-- SCENE 1: THE COUNTDOWN TO MAGIC -->
+      <div class="sky-stage sky-stage--1 active" id="skyStage1">
+        <div class="sky-star-core">
+          <div class="sky-star-halo"></div>
+          <div class="sky-star-spark">✦</div>
+        </div>
+        <p class="sky-greeting-sub" id="skyStage1Sub">HEY, MY FVRT ONE... 🤍</p>
+        <h2 class="sky-greeting-main" id="skyStage1Main">THIS MOMENT IS ALL YOURS.</h2>
+        <button class="btn-glow sky-launch-btn" id="btnStartMagic">
+          <span class="btn-inner">START THE MAGIC ✨</span>
+        </button>
+      </div>
+
+      <!-- SCENE 3: THE BIRTHDAY REVEAL (Scenes 2 & 3 flow) -->
+      <div class="sky-stage sky-stage--3" id="skyStage3">
+        <div class="sky-reveal-galaxy">
+          <div class="sky-galaxy-spiral"></div>
+          <div class="sky-galaxy-sun"></div>
+        </div>
+        <p class="sky-reveal-pre" id="skyRevealPre">HAPPY BIRTHDAY...</p>
+        <h1 class="sky-reveal-name" id="skyRevealName">
+          <span class="name-part">JAYAPRAKASH!</span>
+          <span class="name-hearts">🤍❤️</span>
+        </h1>
+        <div class="sky-stage-actions" id="skyStage3Actions">
+          <button class="btn-glow sky-next-btn" id="btnToNames">
+            <span class="btn-inner">Explore Your Stars ➔</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SCENE 4: HIS SPECIAL NAMES (ORBITING WORDS) -->
+      <div class="sky-stage sky-stage--4" id="skyStage4">
+        <p class="sky-orbit-eyebrow">✦ CONSTELLATION OF NAMES ✦</p>
+        
+        <!-- Central Galaxy Hub with Orbiting Nicknames -->
+        <div class="sky-orbit-system" id="skyOrbitSystem">
+          <div class="sky-orbit-core-sun"></div>
+          <div class="sky-orbit-rings"></div>
+
+          <!-- The Floating Orbiting Words -->
+          <div class="sky-orbit-words" id="skyOrbitWords">
+            <button class="sky-orbit-word" data-name="jp" style="--angle: 0deg; --dist: 175px;">
+              <span>MY JP.</span>
+            </button>
+            <button class="sky-orbit-word" data-name="potta" style="--angle: 60deg; --dist: 165px;">
+              <span>MY POTTA.</span>
+            </button>
+            <button class="sky-orbit-word" data-name="thangameyyy" style="--angle: 120deg; --dist: 185px;">
+              <span>MY THANGAMEYYY.</span>
+            </button>
+            <button class="sky-orbit-word" data-name="enthambi" style="--angle: 180deg; --dist: 170px;">
+              <span>MY EN THAMBI.</span>
+            </button>
+            <button class="sky-orbit-word" data-name="uyiree" style="--angle: 240deg; --dist: 180px;">
+              <span>MY UYIREE.</span>
+            </button>
+            <button class="sky-orbit-word sky-orbit-word--fvrt" id="wordFvrtOne" data-name="fvrt" style="--angle: 300deg; --dist: 160px;">
+              <span>MY FVRT ONE. 🤍</span>
+            </button>
+          </div>
+        </div>
+
+        <p class="sky-orbit-hint" id="skyOrbitHint">Click <strong>"MY FVRT ONE"</strong> to bring your stars together 🤍</p>
+
+        <!-- Morphed Giant White Heart Container -->
+        <div class="sky-heart-tribute hidden" id="skyHeartTribute">
+          <div class="sky-giant-heart-glow">🤍</div>
+          <div class="sky-tribute-card">
+            <p class="sky-tribute-line">ONE PERSON.</p>
+            <p class="sky-tribute-line">SO MANY NAMES.</p>
+            <h3 class="sky-tribute-highlight">MY FVRT ONE FOREVER. 🤍</h3>
+          </div>
+          <button class="btn-glow sky-next-btn" id="btnToWish">
+            <span class="btn-inner">Make a Wish, JP ✨</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SCENE 5: THE WISH EXPLOSION -->
+      <div class="sky-stage sky-stage--5" id="skyStage5">
+        <p class="sky-wish-eyebrow">✦ A MOMENT IN TIME ✦</p>
+        <h2 class="sky-wish-title">MAKE A WISH, JP. ✨</h2>
+
+        <div class="sky-wish-orb-wrapper">
+          <div class="sky-wish-orb" id="skyWishOrb" role="button" tabindex="0" aria-label="Touch the orb to make your wish">
+            <div class="sky-orb-aura"></div>
+            <div class="sky-orb-ring-1"></div>
+            <div class="sky-orb-ring-2"></div>
+            <div class="sky-orb-sphere">
+              <span class="sky-orb-symbol">✨</span>
+            </div>
+          </div>
+          <p class="sky-wish-prompt" id="skyWishPrompt">Touch the glowing star orb to release your wish into the universe</p>
+        </div>
+
+        <!-- Wish Explosion Message -->
+        <div class="sky-wish-message hidden" id="skyWishMsg">
+          <div class="sky-wish-card">
+            <p class="sky-wish-line">MAY YOUR DREAMS FIND THEIR WAY TO YOU.</p>
+            <p class="sky-wish-line">MAY HAPPINESS FOLLOW YOU EVERYWHERE.</p>
+            <p class="sky-wish-line sky-wish-line--gold">MAY YOUR HEART ALWAYS FIND REASONS TO SMILE. 🤍</p>
+          </div>
+          <button class="btn-glow sky-next-btn" id="btnToFinale">
+            <span class="btn-inner">The Grand Finale 🎆 🤍</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SCENE 6: THE GRAND FINALE -->
+      <div class="sky-stage sky-stage--6" id="skyStage6">
+        <div class="sky-finale-content">
+          <div class="sky-giant-heart-symbol" id="finaleGiantHeart">🤍</div>
+          
+          <h2 class="sky-finale-bday" id="finaleBdayTitle">HAPPY BIRTHDAY, MY FVRT ONE. 🤍❤️</h2>
+
+          <div class="sky-finale-chorus" id="finaleChorus">
+            <span class="chorus-item">MY JP.</span>
+            <span class="chorus-item">MY POTTA.</span>
+            <span class="chorus-item">MY THANGAMEYYY.</span>
+            <span class="chorus-item">MY EN THAMBI.</span>
+            <span class="chorus-item">MY UYIREE.</span>
+            <span class="chorus-item chorus-item--gold">MY FVRT ONE.</span>
+          </div>
+
+          <div class="sky-finale-eternal hidden" id="finaleEternal">
+            <div class="sky-eternal-heart">🤍</div>
+            <p class="sky-eternal-quote">YOU'LL ALWAYS BE SOMEONE SPECIAL IN MY UNIVERSE. 🤍</p>
+          </div>
+
+          <div class="sky-finale-actions hidden" id="finaleActions">
+            <button class="btn-glow" id="btnFinaleReplay">
+              <span class="btn-inner">Replay Celebration ✦</span>
+            </button>
+            <button class="btn-ghost" id="btnFinaleExit" data-target="nicknames">
+              Return to Universe ➔
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.sky-stages-wrap -->
+  </section>
+
+  <!-- ── SECTION: MEMORIES SCRAPBOOK (OPTIONAL) ─────────────── -->
+  <section id="gallery" class="section section--gallery">
+    <div class="section-nebula"></div>
+    <button class="back-btn" data-target="final">← Back to Celebration 🎂</button>
+    <div class="section-header">
+      <p class="section-eyebrow">✦ OUR LITTLE SCRAPBOOK ✦</p>
+      <h2 class="section-title">Memories with My Fvrt One 🤍</h2>
+      <p class="section-sub">Some moments are ordinary until they become memories.</p>
+    </div>
+
+    <div class="gallery-cats" id="galleryCats"></div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+    <div class="gallery-empty" id="galleryEmpty">
+      <div class="empty-star">🤍</div>
+      <p>Photographs and memories can be added anytime in <code>config.js</code>.</p>
+      <p class="empty-hint">Every moment with you is already etched in the stars, Potta. 🤍</p>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Photo viewer">
+      <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+      <button class="lb-close" id="lbClose" aria-label="Close photo">✕</button>
+      <button class="lb-prev" id="lbPrev" aria-label="Previous photo">‹</button>
+      <button class="lb-next" id="lbNext" aria-label="Next photo">›</button>
+      <div class="lb-inner">
+        <div class="lb-polaroid">
+          <img class="lb-img" id="lbImg" src="" alt="" />
+          <div class="lb-caption" id="lbCaption"></div>
+          <div class="lb-date" id="lbDate"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /#mainApp -->
+
+<!-- ============================================================
+     VIRTUAL HUG MODAL / TOAST
+============================================================ -->
+<div id="hugModal" class="hug-modal hidden" role="dialog" aria-modal="true" aria-label="Virtual Hug">
+  <div class="hug-backdrop" id="hugBackdrop"></div>
+  <div class="hug-card">
+    <div class="hug-emoji">🫂🤍</div>
+    <h3 class="hug-text">Sending you the biggest virtual hug ever, Potta. 🫂🤍</h3>
+    <p class="hug-sub">You are always loved, always protected, and forever my Fvrt One.</p>
+    <button class="btn-glow" id="closeHugBtn">
+      <span class="btn-inner">Thank You 🤍</span>
+    </button>
+  </div>
+</div>
+
+<!-- Config must load before main.js -->
+<script src="config.js?v=bday_sky_v1"></script>
+<script src="js/main.js?v=bday_sky_v1"></script>
+</body>
+</html>
